@@ -7,6 +7,7 @@ namespace Project
     public partial class EmployeeView : Form
     {
         private EmployeeRepo employeeRepo = new EmployeeRepo();
+        private int a;
         public EmployeeView()
         {
             InitializeComponent();
