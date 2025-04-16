@@ -12,7 +12,6 @@ namespace Project
         private EmployeeRepo employeeRepo = new EmployeeRepo();
         private OfficeRepo officeRepo = new OfficeRepo();
         private EmployeeView parent;
-        private int a;
 
         public AddEmployeeForm(EmployeeView parent)
         {
