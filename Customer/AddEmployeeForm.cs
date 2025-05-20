@@ -9,6 +9,9 @@ namespace Project
 {
     public partial class AddEmployeeForm : Form
     {
-        
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
