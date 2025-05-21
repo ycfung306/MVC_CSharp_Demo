@@ -141,6 +141,33 @@ namespace Project
             conn.Close();
             return employees;
         }
+        public List<Employee> GetByJobTitle(string jobTitle)
+        {
+            OfficeRepo officeRepo = new OfficeRepo();
+            MySqlConnection conn = Program.GetConnection();
+            conn.Open();
+            MySqlCommand sql = new MySqlCommand("SELECT * FROM employees WHERE jobTitle = @jobTitle", conn);
+            sql.Parameters.AddWithValue("@jobTitle", jobTitle);
+            MySqlDataReader reader = sql.ExecuteReader();
+            List<Employee> employees = new List<Employee>();
+            while (reader.Read())
+            {
+                Employee employee = new Employee();
+                employee.EmployeeNumber = reader.GetInt32("employeeNumber");
+                employee.LastName = reader.GetString("lastName");
+                employee.FirstName = reader.GetString("firstName");
+                employee.Extension = reader.GetString("extension");
+                employee.Email = reader.GetString("email");
+                employee.OfficeCode = reader.GetString("officeCode");
+                employee.Office = officeRepo.GetById(reader.GetInt32("officeCode"));
+                employee.JobTitle = reader.GetString("jobTitle");
+                employee.ReportsToId = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
+                employee.ReportsTo = employee.ReportsToId >= 0 ? GetById(employee.ReportsToId) : null;
+                employees.Add(employee);
+            }
+            conn.Close();
+            return employees;
+        }
         public bool Delete(int id)
         {
             MySqlConnection conn = Program.GetConnection();
