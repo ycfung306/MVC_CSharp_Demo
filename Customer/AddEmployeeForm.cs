@@ -9,6 +9,11 @@ namespace Project
 {
     public partial class AddEmployeeForm : Form
     {
+        public AddEmployeeForm()
+        {
+            InitializeComponent();
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
 

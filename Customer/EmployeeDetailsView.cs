@@ -12,6 +12,11 @@ namespace Project
 {
     public partial class EmployeeDetailsView : Form
     {
+        public EmployeeDetailsView()
+        {
+            InitializeComponent();
+        }
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
 

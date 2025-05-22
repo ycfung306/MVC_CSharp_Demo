@@ -6,6 +6,12 @@ namespace Project
 {
     public partial class EmployeeView : Form
     {
+
+        public EmployeeView()
+        {
+            InitializeComponent();
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
 
