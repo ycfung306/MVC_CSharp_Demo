@@ -54,7 +54,7 @@ namespace Project
                 employee.Extension = txtExt.Text;
                 employee.Email = txtEmail.Text;
                 employee.OfficeCode = Convert.ToString(cboOffice.SelectedValue);
-                employee.ReportsToId = Convert.ToInt32(cboReportsTo.SelectedValue);
+                employee.ReportsTo = Convert.ToInt32(cboReportsTo.SelectedValue);
                 employeeRepo.Add(employee);
                 Close();
                 parent.refreshDataGrid();

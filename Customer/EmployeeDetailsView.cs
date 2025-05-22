@@ -48,7 +48,7 @@ namespace Project
                 txtExt.Text = employee.Extension;
                 txtEmail.Text = employee.Email;
                 cboOffice.SelectedValue = employee.OfficeCode;
-                cboReportsTo.SelectedValue = employee.ReportsToId;
+                cboReportsTo.SelectedValue = employee.ReportsTo;
                 List<Employee> supervise = employeeRepo.GetSupervise(employee.EmployeeNumber);
                 dvgSupervise.Columns.Clear();
                 dvgSupervise.AutoGenerateColumns = false;
@@ -108,7 +108,7 @@ namespace Project
                 employee.Extension = txtExt.Text;
                 employee.Email = txtEmail.Text;
                 employee.OfficeCode = Convert.ToString(cboOffice.SelectedValue);
-                employee.ReportsToId = Convert.ToInt32(cboReportsTo.SelectedValue);
+                employee.ReportsTo = Convert.ToInt32(cboReportsTo.SelectedValue);
                 if (employeeRepo.Edit(employee))
                 {
                     MessageBox.Show("Employee updated successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

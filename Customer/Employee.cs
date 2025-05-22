@@ -13,10 +13,7 @@ namespace Project
         private string extension;
         private string email;
         private string officeCode;
-        private Office office;
-        private int reportsToId;
-        private Employee reportsTo;
-        private List<Employee> supervise;
+        private int reportsTo;
         private string jobTitle;
         public int EmployeeNumber { get { return employeeNumber; } set { employeeNumber = value; } }
         public string LastName { get { return lastName; } set { lastName = value; } }
@@ -24,10 +21,7 @@ namespace Project
         public string Extension { get { return extension; } set { extension = value; } }
         public string Email { get { return email; } set { email = value; } }
         public string OfficeCode { get { return officeCode; } set { officeCode = value; } }
-        public Office Office { get { return office; } set { office = value; } }
-        public int ReportsToId { get { return reportsToId; } set { reportsToId = value; } }
-        public Employee ReportsTo { get { return reportsTo; } set { reportsTo = value; } }
-        public List<Employee> Supervise { get { return supervise; } set { supervise = value; } }
+        public int ReportsTo { get { return reportsTo; } set { reportsTo = value; } }
         public string JobTitle { get { return jobTitle; } set { jobTitle = value; } }
         public string FullName
         {
@@ -55,10 +49,8 @@ namespace Project
                 employee.Extension = reader.GetString("extension");
                 employee.Email = reader.GetString("email");
                 employee.OfficeCode = reader.GetString("officeCode");
-                employee.Office = officeRepo.GetById(reader.GetInt32("officeCode"));
                 employee.JobTitle = reader.GetString("jobTitle");
-                employee.ReportsToId = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
-                employee.ReportsTo = employee.ReportsToId >= 0 ? GetById(employee.ReportsToId) : null;
+                employee.ReportsTo = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
                 employees.Add(employee);
             }
             conn.Close();
@@ -82,10 +74,8 @@ namespace Project
                 employee.Extension = reader.GetString("extension");
                 employee.Email = reader.GetString("email");
                 employee.OfficeCode = reader.GetString("officeCode");
-                employee.Office = officeRepo.GetById(reader.GetInt32("officeCode"));
                 employee.JobTitle = reader.GetString("jobTitle");
-                employee.ReportsToId = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
-                employee.ReportsTo = employee.ReportsToId >= 0 ? GetById(employee.ReportsToId) : null;
+                employee.ReportsTo = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
             }
             conn.Close();
             return employee;
@@ -109,10 +99,8 @@ namespace Project
                 employee.Extension = reader.GetString("extension");
                 employee.Email = reader.GetString("email");
                 employee.OfficeCode = reader.GetString("officeCode");
-                employee.Office = officeRepo.GetById(reader.GetInt32("officeCode"));
                 employee.JobTitle = reader.GetString("jobTitle");
-                employee.ReportsToId = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
-                employee.ReportsTo = employee.ReportsToId >= 0 ? GetById(employee.ReportsToId) : null;
+                employee.ReportsTo = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
                 employees.Add(employee);
             }
             conn.Close();
@@ -159,10 +147,8 @@ namespace Project
                 employee.Extension = reader.GetString("extension");
                 employee.Email = reader.GetString("email");
                 employee.OfficeCode = reader.GetString("officeCode");
-                employee.Office = officeRepo.GetById(reader.GetInt32("officeCode"));
                 employee.JobTitle = reader.GetString("jobTitle");
-                employee.ReportsToId = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
-                employee.ReportsTo = employee.ReportsToId >= 0 ? GetById(employee.ReportsToId) : null;
+                employee.ReportsTo = (reader.IsDBNull(reader.GetOrdinal("reportsTo")) ? -1 : reader.GetInt32("reportsTo"));
                 employees.Add(employee);
             }
             conn.Close();
@@ -182,14 +168,14 @@ namespace Project
         {
             MySqlConnection conn = Program.GetConnection();
             conn.Open();
-            MySqlCommand sql = new MySqlCommand("UPDATE employees SET lastName = @lastName, firstName = @firstName, extension = @extension, email = @email, officeCode = @officeCode, jobTitle = @jobTitle, reportsTo = @reportsToId WHERE employeeNumber = @employeeNumber", conn);
+            MySqlCommand sql = new MySqlCommand("UPDATE employees SET lastName = @lastName, firstName = @firstName, extension = @extension, email = @email, officeCode = @officeCode, jobTitle = @jobTitle, reportsTo = @reportsTo WHERE employeeNumber = @employeeNumber", conn);
             sql.Parameters.AddWithValue("@lastName", employee.LastName);
             sql.Parameters.AddWithValue("@firstName", employee.FirstName);
             sql.Parameters.AddWithValue("@extension", employee.Extension);
             sql.Parameters.AddWithValue("@email", employee.Email);
             sql.Parameters.AddWithValue("@officeCode", employee.OfficeCode);
             sql.Parameters.AddWithValue("@jobTitle", employee.JobTitle);
-            sql.Parameters.AddWithValue("@reportsToId", employee.ReportsToId <= 0 ? (object)DBNull.Value : employee.ReportsToId);
+            sql.Parameters.AddWithValue("@reportsTo", employee.ReportsTo <= 0 ? (object)DBNull.Value : employee.ReportsTo);
             sql.Parameters.AddWithValue("@employeeNumber", employee.EmployeeNumber);
             int result = sql.ExecuteNonQuery();
             conn.Close();
@@ -207,7 +193,7 @@ namespace Project
             sql.Parameters.AddWithValue("@email", employee.Email);
             sql.Parameters.AddWithValue("@officeCode", employee.OfficeCode);
             sql.Parameters.AddWithValue("@jobTitle", employee.JobTitle);
-            sql.Parameters.AddWithValue("@reportsTo", employee.ReportsToId < 0 ? (object)DBNull.Value : employee.ReportsToId);
+            sql.Parameters.AddWithValue("@reportsTo", employee.ReportsTo < 0 ? (object)DBNull.Value : employee.ReportsTo);
             int result = sql.ExecuteNonQuery();
             conn.Close();
             return result == 1;
